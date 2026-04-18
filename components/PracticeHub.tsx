@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { JLPTLevel, LessonQuestion } from "@/lib/content";
 import { getAllPracticeCategories, getPracticeExercises, type PracticeCategory } from "@/lib/practice-exercises";
 import { QuestionModal } from "@/components/QuestionModal";
@@ -97,6 +97,62 @@ const CATEGORY_ICONS: Record<PracticeCategory, string> = {
   dialogue_audio: "🎧",
   genki: "📖",
 };
+
+function BlobAudio({ src, className }: { src: string; className?: string }) {
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [blobUrl, setBlobUrl] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  const load = useCallback(async () => {
+    if (blobUrl || loading) return;
+    setLoading(true);
+    setError(false);
+    try {
+      const res = await fetch(src);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const blob = await res.blob();
+      const url = URL.createObjectURL(new Blob([blob], { type: "audio/mpeg" }));
+      setBlobUrl(url);
+    } catch {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  }, [src, blobUrl, loading]);
+
+  useEffect(() => {
+    if (blobUrl && audioRef.current) {
+      audioRef.current.play().catch(() => {});
+    }
+  }, [blobUrl]);
+
+  useEffect(() => {
+    const url = blobUrl;
+    return () => { if (url) URL.revokeObjectURL(url); };
+  }, [blobUrl]);
+
+  if (blobUrl) {
+    return <audio ref={audioRef} controls src={blobUrl} className={className} />;
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={load}
+      disabled={loading}
+      className="inline-flex h-8 items-center gap-1.5 rounded-full bg-teal-600 px-3 text-xs font-medium text-white hover:bg-teal-700 disabled:opacity-60 dark:bg-teal-500 dark:hover:bg-teal-400 transition shrink-0"
+    >
+      {loading ? (
+        <span className="animate-spin text-sm">⏳</span>
+      ) : error ? (
+        <>❌ Ошибка</>
+      ) : (
+        <>▶ Слушать</>
+      )}
+    </button>
+  );
+}
 
 export function PracticeHub({ level }: { level: JLPTLevel }) {
   const [session, setSession] = useState<Session | null>(null);
@@ -361,9 +417,7 @@ export function PracticeHub({ level }: { level: JLPTLevel }) {
                               <div className="min-w-0 flex-1">
                                 <div className="text-xs font-medium text-zinc-900 dark:text-zinc-100">{track.titleRu}</div>
                               </div>
-                              <audio controls preload="none" className="h-8 w-48 min-w-0">
-                                <source src={track.audioUrl} type="audio/mpeg" />
-                              </audio>
+                              <BlobAudio src={track.audioUrl} className="h-8 w-48 min-w-0" />
                             </div>
                           ))}
                         </div>
