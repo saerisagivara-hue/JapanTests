@@ -1,12 +1,12 @@
 import type { Lesson } from "./content";
 
 export const NAREZKI_NEW: Lesson[] = [
-  // narezki-34 (4.7 MB) — N5
+  // narezki-34 (4.7 MB) — N4
   {
-    id: "n5-narezki-mini-dialogue",
-    level: "N5",
-    titleRu: "Мини-диалог на японском",
-    descriptionRu: "Короткий диалог для тренировки восприятия базовых японских фраз на слух.",
+    id: "n4-narezki-frieren-magic",
+    level: "N4",
+    titleRu: "Фрирен: магия запаха",
+    descriptionRu: "Сцена из аниме «Провожающая в последний путь Фрирен» (~1 мин). Фрирен испытывает магию запаха. Разговорная речь, N4.",
     video: { type: "remote", src: "https://archive.org/download/japanese-trainer-narezki/narezki-34.mp4" },
     subtitles: [
       { startSec: 1, endSec: 3.9, ja: "早々のフリーレン 〇〇の魔法", furigana: "早々のフリーレン 〇〇の魔法" },
@@ -31,10 +31,10 @@ export const NAREZKI_NEW: Lesson[] = [
   },
   // narezki-35 (7.8 MB) — N5
   {
-    id: "n5-narezki-everyday-words",
+    id: "n5-narezki-japanese-food",
     level: "N5",
-    titleRu: "Повседневные слова и выражения",
-    descriptionRu: "Набор полезных повседневных слов и фраз для начинающих.",
+    titleRu: "Японская еда: лексика",
+    descriptionRu: "Названия японских блюд и ингредиентов: フルーツサンド, ナポリタン, うなじゅう, 卵かけご飯 и другие. N5.",
     video: { type: "remote", src: "https://archive.org/download/japanese-trainer-narezki/narezki-35.mp4" },
     subtitles: [
       { startSec: 0, endSec: 6, ja: "ユニークな日本の食べ物", furigana: "ユニークな日本の食べ物" },
@@ -76,12 +76,12 @@ export const NAREZKI_NEW: Lesson[] = [
     ],
     questions: [],
   },
-  // narezki-36 (8.7 MB) — N4
+  // narezki-36 (8.7 MB) — N5
   {
-    id: "n4-narezki-short-story",
-    level: "N4",
-    titleRu: "Короткая история на японском",
-    descriptionRu: "Небольшая история для аудирования на уровне N4.",
+    id: "n5-narezki-time",
+    level: "N5",
+    titleRu: "Время",
+    descriptionRu: "Как определять время по часам на японском. Базовые числа, часы и минуты. Уровень N5.",
     video: { type: "remote", src: "https://archive.org/download/japanese-trainer-narezki/narezki-36.mp4" },
     subtitles: [
       { startSec: 0, endSec: 3.4, ja: "何時かな?", furigana: "何時かな?" },
@@ -126,12 +126,12 @@ export const NAREZKI_NEW: Lesson[] = [
     ],
     questions: [],
   },
-  // narezki-37 (12.6 MB) — N4
+  // narezki-37 (12.6 MB) — N2
   {
-    id: "n4-narezki-daily-life",
-    level: "N4",
-    titleRu: "Повседневная жизнь: описание дня",
-    descriptionRu: "Видео о повседневной жизни — практика понимания рассказов о ежедневных делах.",
+    id: "n2-narezki-beastars",
+    level: "N2",
+    titleRu: "Beastars: истинная сила",
+    descriptionRu: "Сцена из аниме Beastars (~1 мин). Тема: ложь, хищники и истинная сила. Книжная лексика: まみれている, 装飾, 邪悪さ. Уровень N2.",
     video: { type: "remote", src: "https://archive.org/download/japanese-trainer-narezki/narezki-37.mp4" },
     subtitles: [
       { startSec: 0, endSec: 2.8, ja: "おいフリー", furigana: "おいフリー" },
@@ -150,12 +150,12 @@ export const NAREZKI_NEW: Lesson[] = [
     ],
     questions: [],
   },
-  // narezki-38 (24.1 MB) — N4
+  // narezki-38 (24.1 MB) — N3
   {
-    id: "n4-narezki-conversation",
-    level: "N4",
-    titleRu: "Разговорная практика",
-    descriptionRu: "Разговорный японский: тренировка восприятия естественной речи на уровне N4.",
+    id: "n3-narezki-mha-suneater",
+    level: "N3",
+    titleRu: "Моя Геройская Академия: Санитер",
+    descriptionRu: "Сцена из MHA (~1 мин). Амадзики Тамаки (Санитер) демонстрирует свою индивидуальность «Переявление». Кансайский диалект, аниме-лексика, N3.",
     video: { type: "remote", src: "https://archive.org/download/japanese-trainer-narezki/narezki-38.mp4" },
     subtitles: [
       { startSec: 0, endSec: 1, ja: "おお!", furigana: "おお!" },
@@ -194,12 +194,12 @@ export const NAREZKI_NEW: Lesson[] = [
     ],
     questions: [],
   },
-  // narezki-39 (30.3 MB) — N3
+  // narezki-39 (30.3 MB) — N4
   {
-    id: "n3-narezki-interview",
-    level: "N3",
-    titleRu: "Интервью на японском",
-    descriptionRu: "Тренировка понимания интервью — более длинные высказывания и сложная лексика.",
+    id: "n4-narezki-phone-business",
+    level: "N4",
+    titleRu: "Телефонный этикет на работе",
+    descriptionRu: "Как отвечать на телефон в японской компании. Внешние и внутренние звонки, деловые фразы: でございます, お世話になっております, お疲れ様です. N4.",
     video: { type: "remote", src: "https://archive.org/download/japanese-trainer-narezki/narezki-39.mp4" },
     subtitles: [
       { startSec: 0, endSec: 2, ja: "音楽", furigana: "音楽" },
@@ -349,12 +349,12 @@ export const NAREZKI_NEW: Lesson[] = [
     ],
     questions: [],
   },
-  // narezki-40 (34.7 MB) — N3
+  // narezki-40 (34.7 MB) — N2
   {
-    id: "n3-narezki-discussion",
-    level: "N3",
-    titleRu: "Обсуждение на японском",
-    descriptionRu: "Дискуссия на японском языке — тренировка понимания разговорной речи среднего уровня.",
+    id: "n2-narezki-kny-uppermoons",
+    level: "N2",
+    titleRu: "Клинок: собрание Высших Лун",
+    descriptionRu: "Сцена из «Клинок, рассекающий демонов» (~3 мин). Собрание Высших Лун у Музана. Архаичная и формальная речь, N2.",
     video: { type: "remote", src: "https://archive.org/download/japanese-trainer-narezki/narezki-40.mp4" },
     subtitles: [
       { startSec: 0, endSec: 15.8, ja: "第1話 イクウカン", furigana: "第1話 イクウカン" },
@@ -426,12 +426,12 @@ export const NAREZKI_NEW: Lesson[] = [
     ],
     questions: [],
   },
-  // narezki-41 (82.6 MB) — N3
+  // narezki-41 (82.6 MB) — N5
   {
-    id: "n3-narezki-long-story",
-    level: "N3",
-    titleRu: "Длинная история на японском",
-    descriptionRu: "Продолжительная история для углубленного аудирования на уровне N3.",
+    id: "n5-narezki-restaurant",
+    level: "N5",
+    titleRu: "В ресторане: заказ еды",
+    descriptionRu: "Сцена в ресторане (~5 мин). Базовые фразы: 何名様ですか?, これをください, 美味しいですか?, 乾杯!. Счётчики людей и порций. N5.",
     video: { type: "remote", src: "https://archive.org/download/japanese-trainer-narezki/narezki-41.mp4" },
     subtitles: [
       { startSec: 0, endSec: 4.3, ja: "音楽", furigana: "音楽" },
@@ -494,9 +494,9 @@ export const NAREZKI_NEW: Lesson[] = [
   {
     id: "n2-narezki-advanced-talk",
     level: "N2",
-    titleRu: "Vocaloid: 内なる花 — песня Хацунэ Мику",
+    titleRu: "Песня",
     descriptionRu:
-      "Песня Hatsune Miku (~4 мин). Тема: быстротечность, внутренняя красота, поиск себя. Поэтический язык, книжные формы ～てゆく, ～ぬ, やむを得ず. Уровень N2.",
+      "Песня (~4 мин). Тема: быстротечность, внутренняя красота, поиск себя. Поэтический язык, книжные формы ～てゆく, ～ぬ, やむを得ず. Уровень N2.",
     video: { type: "remote", src: "https://archive.org/download/japanese-trainer-narezki/narezki-42.mp4" },
     subtitles: [
       { startSec: 0, endSec: 16, ja: "作詞・作曲・編曲 初音ミク", furigana: "さくし・さっきょく・へんきょく はつね ミク" },
