@@ -1527,6 +1527,7 @@ const LESSON_SORT: Record<string, number> = {
   "n3-narezki-long-story": 120,
   // N2
   "n2-god-farewell": 20,
+  "n2-neuvillette-furina": 25,
   "n2-shaman-king-flowers": 30,
   "n2-fantasy-protect-land": 40,
   "n2-narezki-advanced-talk": 50,
