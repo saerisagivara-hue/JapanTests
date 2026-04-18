@@ -5,7 +5,7 @@ import type { JLPTLevel, LessonQuestion } from "@/lib/content";
 import { getAllPracticeCategories, getPracticeExercises, type PracticeCategory } from "@/lib/practice-exercises";
 import { QuestionModal } from "@/components/QuestionModal";
 import { SpeechPractice } from "@/components/SpeechPractice";
-import { GENKI_LESSON_TITLES, getGenkiExercisesByLesson, getGenkiAudioByLesson, GENKI_ARCHIVE_ITEM, GENKI_EXERCISES_SITE } from "@/lib/genki-exercises";
+import { GENKI_LESSON_TITLES, getGenkiExercisesByLesson, getGenkiAudioByLesson } from "@/lib/genki-exercises";
 
 type Session = {
   questions: LessonQuestion[];
@@ -296,25 +296,6 @@ export function PracticeHub({ level }: { level: JLPTLevel }) {
 
           {showGenki && (
             <div className="mt-4 space-y-3">
-              <div className="flex flex-wrap gap-2">
-                <a
-                  href={GENKI_ARCHIVE_ITEM}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex h-9 items-center gap-1.5 rounded-full border border-teal-200 bg-teal-50 px-3 text-xs font-medium text-teal-900 hover:bg-teal-100 dark:border-teal-800 dark:bg-teal-950/40 dark:text-teal-100 dark:hover:bg-teal-900/40"
-                >
-                  🎵 Все аудио (Archive.org)
-                </a>
-                <a
-                  href={GENKI_EXERCISES_SITE}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex h-9 items-center gap-1.5 rounded-full border border-teal-200 bg-teal-50 px-3 text-xs font-medium text-teal-900 hover:bg-teal-100 dark:border-teal-800 dark:bg-teal-950/40 dark:text-teal-100 dark:hover:bg-teal-900/40"
-                >
-                  ✏️ Genki Online Exercises
-                </a>
-              </div>
-
               <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-3">
                 {Object.entries(GENKI_LESSON_TITLES).map(([num, title]) => {
                   const lessonNum = Number(num);
@@ -330,9 +311,6 @@ export function PracticeHub({ level }: { level: JLPTLevel }) {
                           setSelectedGenkiLesson(null);
                         } else {
                           setSelectedGenkiLesson(lessonNum);
-                          if (exercises.length > 0) {
-                            startGenkiLessonSession(lessonNum);
-                          }
                         }
                       }}
                       className={`rounded-2xl border p-3 text-left text-sm transition hover:-translate-y-0.5 hover:shadow-md ${
@@ -351,29 +329,54 @@ export function PracticeHub({ level }: { level: JLPTLevel }) {
               </div>
 
               {selectedGenkiLesson !== null && (
-                <div className="space-y-3">
+                <div className="space-y-4 mt-4">
                   {(() => {
                     const tracks = getGenkiAudioByLesson(selectedGenkiLesson);
-                    if (tracks.length === 0) return null;
+                    const exercises = getGenkiExercisesByLesson(selectedGenkiLesson);
+                    const lessonTitle = GENKI_LESSON_TITLES[selectedGenkiLesson] ?? `Урок ${selectedGenkiLesson}`;
                     return (
-                      <div className="rounded-2xl border border-teal-200 bg-teal-50/50 p-4 dark:border-teal-800 dark:bg-teal-950/30">
-                        <div className="mb-2 text-sm font-semibold text-teal-900 dark:text-teal-100">
-                          🎧 Аудио к {GENKI_LESSON_TITLES[selectedGenkiLesson] ?? `Уроку ${selectedGenkiLesson}`}
-                        </div>
-                        <div className="space-y-2">
-                          {tracks.map((track) => (
-                            <div key={track.trackId} className="flex items-center gap-3 rounded-xl bg-white p-2 dark:bg-zinc-900/60">
-                              <div className="min-w-0 flex-1">
-                                <div className="text-xs font-medium text-zinc-900 dark:text-zinc-100">{track.titleRu}</div>
-                                <div className="text-[10px] text-zinc-400">{track.trackId}</div>
-                              </div>
-                              <audio controls preload="none" className="h-8 w-48 min-w-0">
-                                <source src={track.audioUrl} type="audio/mpeg" />
-                              </audio>
+                      <>
+                        {tracks.length > 0 && (
+                          <div className="rounded-2xl border border-teal-200 bg-teal-50/50 p-4 dark:border-teal-800 dark:bg-teal-950/30">
+                            <div className="mb-3 text-sm font-semibold text-teal-900 dark:text-teal-100">
+                              🎧 Аудио — {lessonTitle}
                             </div>
-                          ))}
-                        </div>
-                      </div>
+                            <p className="mb-3 text-xs text-zinc-500 dark:text-zinc-400">
+                              Прослушайте материал урока, затем пройдите упражнения ниже.
+                            </p>
+                            <div className="space-y-2">
+                              {tracks.map((track) => (
+                                <div key={track.trackId} className="flex items-center gap-3 rounded-xl bg-white p-2 dark:bg-zinc-900/60">
+                                  <div className="min-w-0 flex-1">
+                                    <div className="text-xs font-medium text-zinc-900 dark:text-zinc-100">{track.titleRu}</div>
+                                  </div>
+                                  <audio controls preload="none" className="h-8 w-48 min-w-0">
+                                    <source src={track.audioUrl} type="audio/mpeg" />
+                                  </audio>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {exercises.length > 0 && (
+                          <div className="rounded-2xl border border-emerald-200 bg-emerald-50/50 p-4 dark:border-emerald-800 dark:bg-emerald-950/30">
+                            <div className="mb-2 text-sm font-semibold text-emerald-900 dark:text-emerald-100">
+                              ✏️ Упражнения — {lessonTitle}
+                            </div>
+                            <p className="mb-3 text-xs text-zinc-500 dark:text-zinc-400">
+                              {exercises.length} заданий: выбор ответа, заполнение пропусков, порядок слов, аудирование.
+                            </p>
+                            <button
+                              type="button"
+                              onClick={() => startGenkiLessonSession(selectedGenkiLesson)}
+                              className="inline-flex h-10 items-center gap-2 rounded-full bg-emerald-600 px-5 text-sm font-medium text-white hover:bg-emerald-700 dark:bg-teal-500 dark:hover:bg-teal-400 dark:text-zinc-950 transition"
+                            >
+                              Начать упражнения ({exercises.length} заданий)
+                            </button>
+                          </div>
+                        )}
+                      </>
                     );
                   })()}
                 </div>
