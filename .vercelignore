@@ -8,6 +8,5 @@ scripts/
 build/
 dist/
 *.py
-*.mjs
 *.apk
 .idea/
