@@ -1,0 +1,9 @@
+public/videos/
+electron/
+android/
+ios/
+transcripts/
+scripts/
+build/
+*.py
+*.mjs
