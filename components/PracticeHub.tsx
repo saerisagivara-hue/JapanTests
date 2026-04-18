@@ -5,7 +5,7 @@ import type { JLPTLevel, LessonQuestion } from "@/lib/content";
 import { getAllPracticeCategories, getPracticeExercises, type PracticeCategory } from "@/lib/practice-exercises";
 import { QuestionModal } from "@/components/QuestionModal";
 import { SpeechPractice } from "@/components/SpeechPractice";
-import { GENKI_LESSON_TITLES, getGenkiExercisesByLesson, getGenkiAudioByLesson } from "@/lib/genki-exercises";
+import { GENKI_LESSON_TITLES, getGenkiAudioByLesson } from "@/lib/genki-exercises";
 
 type Session = {
   questions: LessonQuestion[];
@@ -133,20 +133,6 @@ export function PracticeHub({ level }: { level: JLPTLevel }) {
     });
   };
 
-  const startGenkiLessonSession = (lessonNum: number) => {
-    const pool = getGenkiExercisesByLesson(lessonNum);
-    if (pool.length === 0) return;
-    const title = GENKI_LESSON_TITLES[lessonNum] ?? `Genki Урок ${lessonNum}`;
-    const questions = seededShuffle(pool, `genki:${lessonNum}`);
-    setSession({
-      questions,
-      idx: 0,
-      results: {},
-      titleRu: title,
-      category: "genki",
-      variant: 0,
-    });
-  };
 
   const activeQ = session ? session.questions[session.idx] ?? null : null;
 
@@ -230,23 +216,44 @@ export function PracticeHub({ level }: { level: JLPTLevel }) {
       </section>
 
       <section className="grid gap-4 md:grid-cols-2">
-        {categories.map(({ category, titleRu, count }) => (
-          <button
-            key={category}
-            type="button"
-            onClick={() => startSession(titleRu, category)}
-            disabled={count === 0}
-            className={`rounded-3xl border bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60 dark:bg-zinc-900/40 ${CATEGORY_COLORS[category]}`}
-          >
-            <div className="flex items-center gap-2">
-              <span className="text-xl">{CATEGORY_ICONS[category]}</span>
-              <span className="text-base font-semibold">{titleRu}</span>
-            </div>
-            <div className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
-              {count} {count === 1 ? "задание" : count < 5 ? "задания" : "заданий"}
-            </div>
-          </button>
-        ))}
+        {categories.map(({ category, titleRu, count }) => {
+          if (category === "genki") {
+            return (
+              <a
+                key={category}
+                href="http://pollmann.co/Genki/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`rounded-3xl border bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:bg-zinc-900/40 ${CATEGORY_COLORS[category]}`}
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-xl">{CATEGORY_ICONS[category]}</span>
+                  <span className="text-base font-semibold">{titleRu}</span>
+                </div>
+                <div className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
+                  Упражнения по учебнику → pollmann.co/Genki
+                </div>
+              </a>
+            );
+          }
+          return (
+            <button
+              key={category}
+              type="button"
+              onClick={() => startSession(titleRu, category)}
+              disabled={count === 0}
+              className={`rounded-3xl border bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60 dark:bg-zinc-900/40 ${CATEGORY_COLORS[category]}`}
+            >
+              <div className="flex items-center gap-2">
+                <span className="text-xl">{CATEGORY_ICONS[category]}</span>
+                <span className="text-base font-semibold">{titleRu}</span>
+              </div>
+              <div className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
+                {count} {count === 1 ? "задание" : count < 5 ? "задания" : "заданий"}
+              </div>
+            </button>
+          );
+        })}
         <button
           type="button"
           onClick={() => setShowSpeech((v) => !v)}
@@ -274,11 +281,11 @@ export function PracticeHub({ level }: { level: JLPTLevel }) {
           <div className="flex items-center justify-between">
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-2xl">📖</span>
-                <span className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">Genki — аудио и упражнения</span>
+                <span className="text-2xl">🎧</span>
+                <span className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">Genki — аудио к учебнику</span>
               </div>
               <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
-                Упражнения по учебнику Genki 1 (уроки 1–12). Аудио-диалоги, грамматика, лексика, выбор и заполнение пропусков.
+                Аудио к учебнику Genki 1 (2nd Edition). Выберите урок, чтобы прослушать диалоги, лексику и практику.
               </p>
             </div>
             <button
@@ -299,7 +306,6 @@ export function PracticeHub({ level }: { level: JLPTLevel }) {
               <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-3">
                 {Object.entries(GENKI_LESSON_TITLES).map(([num, title]) => {
                   const lessonNum = Number(num);
-                  const exercises = getGenkiExercisesByLesson(lessonNum);
                   const audioTracks = getGenkiAudioByLesson(lessonNum);
                   const isActive = selectedGenkiLesson === lessonNum;
                   return (
@@ -321,7 +327,7 @@ export function PracticeHub({ level }: { level: JLPTLevel }) {
                     >
                       <div className="font-semibold text-zinc-900 dark:text-zinc-50">{title}</div>
                       <div className="mt-0.5 text-xs text-zinc-500 dark:text-zinc-400">
-                        {exercises.length} заданий{audioTracks.length > 0 ? ` · ${audioTracks.length} аудио` : ""}
+                        {audioTracks.length} аудио
                       </div>
                     </button>
                   );
@@ -329,54 +335,39 @@ export function PracticeHub({ level }: { level: JLPTLevel }) {
               </div>
 
               {selectedGenkiLesson !== null && (
-                <div className="space-y-4 mt-4">
+                <div className="mt-4">
                   {(() => {
                     const tracks = getGenkiAudioByLesson(selectedGenkiLesson);
-                    const exercises = getGenkiExercisesByLesson(selectedGenkiLesson);
                     const lessonTitle = GENKI_LESSON_TITLES[selectedGenkiLesson] ?? `Урок ${selectedGenkiLesson}`;
+                    if (tracks.length === 0) return null;
                     return (
-                      <>
-                        {tracks.length > 0 && (
-                          <div className="rounded-2xl border border-teal-200 bg-teal-50/50 p-4 dark:border-teal-800 dark:bg-teal-950/30">
-                            <div className="mb-3 text-sm font-semibold text-teal-900 dark:text-teal-100">
-                              🎧 Аудио — {lessonTitle}
-                            </div>
-                            <p className="mb-3 text-xs text-zinc-500 dark:text-zinc-400">
-                              Прослушайте материал урока, затем пройдите упражнения ниже.
-                            </p>
-                            <div className="space-y-2">
-                              {tracks.map((track) => (
-                                <div key={track.trackId} className="flex items-center gap-3 rounded-xl bg-white p-2 dark:bg-zinc-900/60">
-                                  <div className="min-w-0 flex-1">
-                                    <div className="text-xs font-medium text-zinc-900 dark:text-zinc-100">{track.titleRu}</div>
-                                  </div>
-                                  <audio controls preload="none" className="h-8 w-48 min-w-0">
-                                    <source src={track.audioUrl} type="audio/mpeg" />
-                                  </audio>
-                                </div>
-                              ))}
-                            </div>
+                      <div className="rounded-2xl border border-teal-200 bg-teal-50/50 p-4 dark:border-teal-800 dark:bg-teal-950/30">
+                        <div className="mb-3 flex items-center justify-between">
+                          <div className="text-sm font-semibold text-teal-900 dark:text-teal-100">
+                            🎧 {lessonTitle}
                           </div>
-                        )}
-
-                        {exercises.length > 0 && (
-                          <div className="rounded-2xl border border-emerald-200 bg-emerald-50/50 p-4 dark:border-emerald-800 dark:bg-emerald-950/30">
-                            <div className="mb-2 text-sm font-semibold text-emerald-900 dark:text-emerald-100">
-                              ✏️ Упражнения — {lessonTitle}
+                          <a
+                            href={`http://pollmann.co/Genki/#lesson-${selectedGenkiLesson}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs font-medium text-teal-600 hover:text-teal-800 dark:text-teal-400 dark:hover:text-teal-200 transition"
+                          >
+                            Упражнения к уроку →
+                          </a>
+                        </div>
+                        <div className="space-y-2">
+                          {tracks.map((track) => (
+                            <div key={track.trackId} className="flex items-center gap-3 rounded-xl bg-white p-2 dark:bg-zinc-900/60">
+                              <div className="min-w-0 flex-1">
+                                <div className="text-xs font-medium text-zinc-900 dark:text-zinc-100">{track.titleRu}</div>
+                              </div>
+                              <audio controls preload="none" className="h-8 w-48 min-w-0">
+                                <source src={track.audioUrl} type="audio/mpeg" />
+                              </audio>
                             </div>
-                            <p className="mb-3 text-xs text-zinc-500 dark:text-zinc-400">
-                              {exercises.length} заданий: выбор ответа, заполнение пропусков, порядок слов, аудирование.
-                            </p>
-                            <button
-                              type="button"
-                              onClick={() => startGenkiLessonSession(selectedGenkiLesson)}
-                              className="inline-flex h-10 items-center gap-2 rounded-full bg-emerald-600 px-5 text-sm font-medium text-white hover:bg-emerald-700 dark:bg-teal-500 dark:hover:bg-teal-400 dark:text-zinc-950 transition"
-                            >
-                              Начать упражнения ({exercises.length} заданий)
-                            </button>
-                          </div>
-                        )}
-                      </>
+                          ))}
+                        </div>
+                      </div>
                     );
                   })()}
                 </div>
