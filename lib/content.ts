@@ -135,7 +135,14 @@ const N5_LESSONS: Lesson[] = [
       { startSec: 20.4, endSec: 24.7, ja: "やゆよ / らりるれろ", furigana: "や ゆ よ / ら り る れ ろ" },
       { startSec: 24.7, endSec: 31.0, ja: "わをん", furigana: "わ を ん" },
     ],
-    questions: [],
+    questions: [
+      { id: "n5-kana-q01", kind: "listening_mcq", atSec: 8, promptRu: "Какой ряд хираганы идёт после あいうえお?", optionsRu: ["さしすせそ", "かきくけこ", "たちつてと", "なにぬねの"], correctIndex: 1 },
+      { id: "n5-kana-q02", kind: "listening_mcq", atSec: 12, promptRu: "Как читается「し」?", optionsRu: ["chi", "shi", "si", "tsi"], correctIndex: 1 },
+      { id: "n5-kana-q03", kind: "listening_mcq", atSec: 16, promptRu: "Как читается「つ」?", optionsRu: ["tu", "tsu", "su", "chu"], correctIndex: 1 },
+      { id: "n5-kana-q04", kind: "listening_mcq", atSec: 20, promptRu: "Как читается「ふ」?", optionsRu: ["hu", "fu", "bu", "pu"], correctIndex: 1 },
+      { id: "n5-kana-q05", kind: "listening_mcq", atSec: 25, promptRu: "Сколько строк в основной таблице хираганы (годзюон)?", optionsRu: ["5", "10", "15", "20"], correctIndex: 1, explanationRu: "10 рядов: あ, か, さ, た, な, は, ま, や, ら, わ." },
+      { id: "n5-kana-q06", kind: "listening_mcq", atSec: 28, promptRu: "Что особенного в「を」?", optionsRu: ["Это гласная", "Используется только как частица", "Не существует", "Читается 'wo'"], correctIndex: 1, explanationRu: "を почти всегда используется только как частица прямого дополнения и произносится 'о'." },
+    ],
     grammarNotes: [
       {
         titleJa: "は (частица)",
@@ -207,7 +214,29 @@ const N5_LESSONS: Lesson[] = [
       { startSec: 97.5, endSec: 101.3, ja: "6,7,8,9,10", furigana: "6,7,8,9,10" },
       { startSec: 106.7, endSec: 136.7, ja: "ご視聴ありがとうございました", furigana: "ご視聴ありがとうございました" },
     ],
-    questions: [],
+    questions: [
+      { id: "n5-num-q01", kind: "listening_mcq", atSec: 15, promptRu: "Как читается число 4 по-японски (кунное чтение)?", optionsRu: ["し (shi)", "よん (yon)", "Оба варианта верны", "よ (yo)"], correctIndex: 2, explanationRu: "4 = し или よん. し избегают из-за созвучия со 死 (смерть), чаще используют よん." },
+      { id: "n5-num-q02", kind: "listening_mcq", atSec: 32, promptRu: "Счётчик ～つ используется для:", optionsRu: ["Длинных предметов", "Общего счёта предметов", "Животных", "Людей"], correctIndex: 1, explanationRu: "～つ — универсальный счётчик для предметов (1つ, 2つ... 9つ, 10 — とお)." },
+      { id: "n5-num-q03", kind: "listening_mcq", atSec: 45, promptRu: "Счётчик ～本（ほん）используется для:", optionsRu: ["Книг", "Длинных/цилиндрических предметов", "Плоских предметов", "Животных"], correctIndex: 1, explanationRu: "本 — для длинных предметов: ручки, бутылки, зонтики, деревья." },
+      { id: "n5-num-q04", kind: "listening_mcq", atSec: 50, promptRu: "Как читается「3本」?", optionsRu: ["さんぼん", "さんほん", "さんぽん", "みほん"], correctIndex: 2, explanationRu: "3本 = さんぼん. Чтение 本 меняется: 1本(いっぽん), 2本(にほん), 3本(さんぼん)." },
+      { id: "n5-num-q05", kind: "listening_mcq", atSec: 65, promptRu: "Счётчик ～匹（ひき）используется для:", optionsRu: ["Людей", "Мелких животных", "Книг", "Машин"], correctIndex: 1, explanationRu: "匹 — для мелких животных: кошки, собаки, рыбы, насекомые." },
+      { id: "n5-num-q06", kind: "listening_mcq", atSec: 70, promptRu: "Как читается「6匹」?", optionsRu: ["ろくひき", "ろっぴき", "むひき", "むっぴき"], correctIndex: 1, explanationRu: "6匹 = ろっぴき. Чтение меняется: 1匹(いっぴき), 3匹(さんびき), 6匹(ろっぴき)." },
+    ],
+    grammarNotes: [
+      {
+        titleJa: "助数詞（じょすうし）",
+        titleRu: "Счётные суффиксы (助数詞)",
+        level: "N5",
+        structure: "число + 助数詞",
+        explanationRu: "В японском нельзя просто сказать «три кошки» — нужен счётный суффикс: 3匹の猫. Каждый суффикс используется для определённой категории предметов. Самые базовые: ～つ (универсальный), ～本 (длинные предметы), ～匹 (мелкие животные), ～人 (люди), ～枚 (плоские предметы).",
+        examples: [
+          { ja: "ペンを3本ください。", furigana: "ペン を さんぼん ください。", ru: "Дайте 3 ручки, пожалуйста." },
+          { ja: "猫が2匹います。", furigana: "ねこ が にひき います。", ru: "Есть 2 кошки." },
+          { ja: "りんごを5つ買いました。", furigana: "りんご を いつつ かいました。", ru: "Купил 5 яблок." },
+        ],
+        tip: "～つ работает для почти всего, если не знаете специальный счётчик. Но только до 9 (10 = とお).",
+      },
+    ],
   },
 
   // ──────── Песенка катаканы ────────
@@ -320,7 +349,43 @@ const N5_LESSONS: Lesson[] = [
       { startSec: 580.5, endSec: 584.7, ja: "歌いましょう キャキューキョ", furigana: "歌いましょう キャキューキョ" },
       { startSec: 600, endSec: 610.8, ja: "チャンネル登録をお願いいたします", furigana: "チャンネル登録をお願いいたします" },
     ],
-    questions: [],
+    questions: [
+      { id: "n5-kata-q01", kind: "listening_mcq", atSec: 250, promptRu: "Катакана используется в основном для:", optionsRu: ["Японских слов", "Иностранных слов и названий", "Грамматических частиц", "Глаголов"], correctIndex: 1 },
+      { id: "n5-kata-q02", kind: "listening_mcq", atSec: 270, promptRu: "「ゴルフ」— это:", optionsRu: ["Гольф", "Волк", "Гонка", "Горка"], correctIndex: 0 },
+      { id: "n5-kata-q03", kind: "listening_mcq", atSec: 340, promptRu: "「コンビニ」— это сокращение от:", optionsRu: ["Комбайн", "Конвейер", "Конвиниенс стор (convenience store)", "Коммуникация"], correctIndex: 2, explanationRu: "コンビニ от англ. convenience store — магазин у дома, работающий 24/7." },
+      { id: "n5-kata-q04", kind: "listening_mcq", atSec: 350, promptRu: "「プレゼント」означает:", optionsRu: ["Презентация", "Подарок", "Президент", "Приз"], correctIndex: 1 },
+      { id: "n5-kata-q05", kind: "listening_mcq", atSec: 420, promptRu: "Как записать «шатсу» (рубашка) катаканой?", optionsRu: ["シャツ", "サツ", "シヤツ", "ジャツ"], correctIndex: 0, explanationRu: "シャツ (shatsu) от англ. shirt. シャ — это комбинация ши+я (拗音)." },
+      { id: "n5-kata-q06", kind: "listening_mcq", atSec: 475, promptRu: "「チャンス」означает:", optionsRu: ["Чай", "Танец", "Шанс", "Сдача"], correctIndex: 2 },
+      { id: "n5-kata-q07", kind: "listening_mcq", atSec: 485, promptRu: "「ピカチュウ」записывается катаканой, потому что:", optionsRu: ["Это иностранное слово", "Это имя персонажа / звукоподражание", "Это глагол", "Это ошибка"], correctIndex: 1, explanationRu: "Катакана используется не только для иностранных слов, но и для имён персонажей, звукоподражаний и акцента." },
+    ],
+    grammarNotes: [
+      {
+        titleJa: "カタカナ",
+        titleRu: "Катакана — когда использовать",
+        level: "N5",
+        structure: "Иностранные слова, имена, звукоподражания → カタカナ",
+        explanationRu: "Катакана используется для: 1) иностранных заимствований (コーヒー, パソコン), 2) иностранных имён (マイク, アンナ), 3) звукоподражаний (ワンワン — гав-гав), 4) научных терминов, 5) для акцента/выделения (как курсив). Каждый символ катаканы имеет пару в хирагане: ア=あ, カ=か, サ=さ.",
+        examples: [
+          { ja: "パソコン", furigana: "パソコン", ru: "Компьютер (от personal computer)" },
+          { ja: "キャラメル", furigana: "キャラメル", ru: "Карамель" },
+          { ja: "ジョギング", furigana: "ジョギング", ru: "Джоггинг (бег)" },
+        ],
+        tip: "Длинные гласные в катакане обозначаются чертой ー: コーヒー (koohii), ケーキ (keeki).",
+      },
+      {
+        titleJa: "拗音（ようおん）",
+        titleRu: "Комбинированные звуки (拗音): キャ, シュ, チョ...",
+        level: "N5",
+        structure: "Большой символ + маленький ャ/ュ/ョ",
+        explanationRu: "拗音 — это комбинированные звуки, где к основному символу добавляется маленький ャ, ュ или ョ. Например: キ+ャ=キャ (kya), シ+ュ=シュ (shu), チ+ョ=チョ (cho). Маленький символ пишется меньше обычного. Эти звуки очень важны для правильного произношения заимствованных слов.",
+        examples: [
+          { ja: "キャンセル", furigana: "キャンセル", ru: "Отмена (cancel)" },
+          { ja: "シャツ", furigana: "シャツ", ru: "Рубашка (shirt)" },
+          { ja: "チョコレート", furigana: "チョコレート", ru: "Шоколад (chocolate)" },
+        ],
+        tip: "Обратите внимание на размер: シヤ (ши-я, 2 слога) ≠ シャ (ша, 1 слог). Маленький ャ — это 拗音.",
+      },
+    ],
   },
 
   // ──────── ВИДЕО 1: КАФЕ — заказ, размеры, оплата ────────
