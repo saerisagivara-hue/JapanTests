@@ -5,7 +5,7 @@ import type { JLPTLevel, LessonQuestion } from "@/lib/content";
 import { getAllPracticeCategories, getPracticeExercises, type PracticeCategory } from "@/lib/practice-exercises";
 import { QuestionModal } from "@/components/QuestionModal";
 import { SpeechPractice } from "@/components/SpeechPractice";
-import { GENKI_LESSON_TITLES, getGenkiExercisesByLesson, GENKI_AUDIO_FOLDER, GENKI_EXERCISES_SITE } from "@/lib/genki-exercises";
+import { GENKI_LESSON_TITLES, getGenkiExercisesByLesson, getGenkiAudioByLesson, GENKI_ARCHIVE_ITEM, GENKI_EXERCISES_SITE } from "@/lib/genki-exercises";
 
 type Session = {
   questions: LessonQuestion[];
@@ -298,12 +298,12 @@ export function PracticeHub({ level }: { level: JLPTLevel }) {
             <div className="mt-4 space-y-3">
               <div className="flex flex-wrap gap-2">
                 <a
-                  href={GENKI_AUDIO_FOLDER}
+                  href={GENKI_ARCHIVE_ITEM}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex h-9 items-center gap-1.5 rounded-full border border-teal-200 bg-teal-50 px-3 text-xs font-medium text-teal-900 hover:bg-teal-100 dark:border-teal-800 dark:bg-teal-950/40 dark:text-teal-100 dark:hover:bg-teal-900/40"
                 >
-                  🎵 Все аудио (Google Drive)
+                  🎵 Все аудио (Archive.org)
                 </a>
                 <a
                   href={GENKI_EXERCISES_SITE}
@@ -319,6 +319,7 @@ export function PracticeHub({ level }: { level: JLPTLevel }) {
                 {Object.entries(GENKI_LESSON_TITLES).map(([num, title]) => {
                   const lessonNum = Number(num);
                   const exercises = getGenkiExercisesByLesson(lessonNum);
+                  const audioTracks = getGenkiAudioByLesson(lessonNum);
                   const isActive = selectedGenkiLesson === lessonNum;
                   return (
                     <button
@@ -342,12 +343,41 @@ export function PracticeHub({ level }: { level: JLPTLevel }) {
                     >
                       <div className="font-semibold text-zinc-900 dark:text-zinc-50">{title}</div>
                       <div className="mt-0.5 text-xs text-zinc-500 dark:text-zinc-400">
-                        {exercises.length} заданий
+                        {exercises.length} заданий{audioTracks.length > 0 ? ` · ${audioTracks.length} аудио` : ""}
                       </div>
                     </button>
                   );
                 })}
               </div>
+
+              {selectedGenkiLesson !== null && (
+                <div className="space-y-3">
+                  {(() => {
+                    const tracks = getGenkiAudioByLesson(selectedGenkiLesson);
+                    if (tracks.length === 0) return null;
+                    return (
+                      <div className="rounded-2xl border border-teal-200 bg-teal-50/50 p-4 dark:border-teal-800 dark:bg-teal-950/30">
+                        <div className="mb-2 text-sm font-semibold text-teal-900 dark:text-teal-100">
+                          🎧 Аудио к {GENKI_LESSON_TITLES[selectedGenkiLesson] ?? `Уроку ${selectedGenkiLesson}`}
+                        </div>
+                        <div className="space-y-2">
+                          {tracks.map((track) => (
+                            <div key={track.trackId} className="flex items-center gap-3 rounded-xl bg-white p-2 dark:bg-zinc-900/60">
+                              <div className="min-w-0 flex-1">
+                                <div className="text-xs font-medium text-zinc-900 dark:text-zinc-100">{track.titleRu}</div>
+                                <div className="text-[10px] text-zinc-400">{track.trackId}</div>
+                              </div>
+                              <audio controls preload="none" className="h-8 w-48 min-w-0">
+                                <source src={track.audioUrl} type="audio/mpeg" />
+                              </audio>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })()}
+                </div>
+              )}
             </div>
           )}
         </section>

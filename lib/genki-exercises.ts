@@ -1220,17 +1220,42 @@ export interface GenkiAudioTrack {
   audioUrl: string;
 }
 
-const GDRIVE_BASE = "https://drive.google.com/uc?export=download&id=";
+const IA_BASE = "https://archive.org/download/genki-1-kaiwa-bunpo-hen-textbook-20260418-t-070624-z-3-001/Genki1_KaiwaBunpo-hen%28Textbook%29";
+
+function genkiAudioUrl(trackId: string): string {
+  return `${IA_BASE}/${trackId}.mp3`;
+}
 
 export const GENKI_AUDIO_TRACKS: GenkiAudioTrack[] = [
-  { lesson: 1, trackId: "K01-01", titleRu: "Приветствия", audioUrl: `${GDRIVE_BASE}` },
-  { lesson: 1, trackId: "K01-05", titleRu: "Диалог: Новые друзья", audioUrl: `${GDRIVE_BASE}` },
-  { lesson: 1, trackId: "K01-22", titleRu: "Числа и время", audioUrl: `${GDRIVE_BASE}` },
-  { lesson: 2, trackId: "K02-01", titleRu: "Слова: Покупки", audioUrl: `${GDRIVE_BASE}` },
-  { lesson: 2, trackId: "K02-05", titleRu: "Диалог: В магазине", audioUrl: `${GDRIVE_BASE}` },
-  { lesson: 3, trackId: "K03-01", titleRu: "Слова: Назначаем встречу", audioUrl: `${GDRIVE_BASE}` },
-  { lesson: 3, trackId: "K03-05", titleRu: "Диалог: Планы на выходные", audioUrl: `${GDRIVE_BASE}` },
+  { lesson: 0, trackId: "Genki1-Title", titleRu: "Genki 1 — Вступление", audioUrl: genkiAudioUrl("Genki1-Title") },
+  { lesson: 0, trackId: "K00-G", titleRu: "Приветствия (Greeting)", audioUrl: genkiAudioUrl("K00-G") },
+  { lesson: 1, trackId: "K01-01", titleRu: "Лексика 1", audioUrl: genkiAudioUrl("K01-01") },
+  { lesson: 1, trackId: "K01-02", titleRu: "Лексика 2", audioUrl: genkiAudioUrl("K01-02") },
+  { lesson: 1, trackId: "K01-03", titleRu: "Лексика 3", audioUrl: genkiAudioUrl("K01-03") },
+  { lesson: 1, trackId: "K01-04", titleRu: "Лексика 4", audioUrl: genkiAudioUrl("K01-04") },
+  { lesson: 1, trackId: "K01-05", titleRu: "Диалог", audioUrl: genkiAudioUrl("K01-05") },
+  { lesson: 1, trackId: "K01-06", titleRu: "Практика: числа 0–10", audioUrl: genkiAudioUrl("K01-06") },
+  { lesson: 1, trackId: "K01-07", titleRu: "Практика: числа 11–100", audioUrl: genkiAudioUrl("K01-07") },
+  { lesson: 1, trackId: "K01-08", titleRu: "Практика: числа (диктант)", audioUrl: genkiAudioUrl("K01-08") },
+  { lesson: 1, trackId: "K01-09", titleRu: "Практика: время", audioUrl: genkiAudioUrl("K01-09") },
+  { lesson: 1, trackId: "K01-10", titleRu: "Практика: телефонные номера", audioUrl: genkiAudioUrl("K01-10") },
+  { lesson: 1, trackId: "K01-22", titleRu: "Диалог (полный)", audioUrl: genkiAudioUrl("K01-22") },
+  { lesson: 2, trackId: "K02-01", titleRu: "Лексика: указатели", audioUrl: genkiAudioUrl("K02-01") },
+  { lesson: 2, trackId: "K02-02", titleRu: "Лексика: еда", audioUrl: genkiAudioUrl("K02-02") },
+  { lesson: 2, trackId: "K02-03", titleRu: "Лексика: вещи", audioUrl: genkiAudioUrl("K02-03") },
+  { lesson: 2, trackId: "K02-04", titleRu: "Лексика: места", audioUrl: genkiAudioUrl("K02-04") },
+  { lesson: 2, trackId: "K02-05", titleRu: "Диалог: В магазине", audioUrl: genkiAudioUrl("K02-05") },
+  { lesson: 2, trackId: "K02-09", titleRu: "Диалог (полный)", audioUrl: genkiAudioUrl("K02-09") },
+  { lesson: 3, trackId: "K03-01", titleRu: "Лексика: развлечения", audioUrl: genkiAudioUrl("K03-01") },
+  { lesson: 3, trackId: "K03-02", titleRu: "Лексика: еда и напитки", audioUrl: genkiAudioUrl("K03-02") },
+  { lesson: 3, trackId: "K03-03", titleRu: "Лексика: места и время", audioUrl: genkiAudioUrl("K03-03") },
+  { lesson: 3, trackId: "K03-04", titleRu: "Лексика: глаголы", audioUrl: genkiAudioUrl("K03-04") },
+  { lesson: 3, trackId: "K03-05", titleRu: "Диалог: Назначаем встречу", audioUrl: genkiAudioUrl("K03-05") },
 ];
 
-export const GENKI_AUDIO_FOLDER = "https://drive.google.com/drive/folders/171ySwDfT8NniElGQxkjiiZtvdZsNJ8ae";
+export function getGenkiAudioByLesson(lesson: number): GenkiAudioTrack[] {
+  return GENKI_AUDIO_TRACKS.filter((t) => t.lesson === lesson);
+}
+
+export const GENKI_ARCHIVE_ITEM = "https://archive.org/details/genki-1-kaiwa-bunpo-hen-textbook-20260418-t-070624-z-3-001";
 export const GENKI_EXERCISES_SITE = "http://pollmann.co/Genki/";
