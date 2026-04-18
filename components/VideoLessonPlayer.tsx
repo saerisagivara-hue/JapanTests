@@ -67,7 +67,13 @@ export function VideoLessonPlayer({ lesson }: { lesson: Lesson }) {
   const [currentTime, setCurrentTime] = useState(0);
   const [showSubs, setShowSubs] = useState(true);
   const [playerReady, setPlayerReady] = useState(() => isLocal);
-  const [localVideoFailed, setLocalVideoFailed] = useState(false);
+  const [localVideoFailed, setLocalVideoFailed] = useState(() => {
+    if (typeof window === "undefined") return false;
+    const isMkv = lesson.video.type === "remote" && lesson.video.src.endsWith(".mkv");
+    if (!isMkv) return false;
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    return isMobile;
+  });
   const [buffering, setBuffering] = useState(false);
   const [resolvedSrc, setResolvedSrc] = useState<string>(() => {
     if (lesson.video.type !== "remote") return lesson.video.type === "local" ? lesson.video.src : "";
@@ -533,7 +539,22 @@ export function VideoLessonPlayer({ lesson }: { lesson: Lesson }) {
       ) : (
         <div className="space-y-4">
           <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-100">
-            Видеофайл недоступен на этом устройстве. Задания и субтитры доступны ниже — можно тренироваться без видео.
+            {lesson.video.type === "remote" && lesson.video.src.endsWith(".mkv") ? (
+              <>
+                <p className="font-medium">Формат MKV не поддерживается на мобильных устройствах.</p>
+                <p className="mt-1">Откройте это видео на компьютере или посмотрите на Archive.org:</p>
+                <a
+                  href={lesson.video.src.replace("/download/", "/details/").replace(/\/[^/]+$/, "")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-block rounded-lg bg-amber-600 px-4 py-2 text-xs font-medium text-white hover:bg-amber-700"
+                >
+                  Смотреть на Archive.org
+                </a>
+              </>
+            ) : (
+              <>Видеофайл недоступен на этом устройстве. Задания и субтитры доступны ниже — можно тренироваться без видео.</>
+            )}
           </div>
 
           {questions.length > 0 && (
